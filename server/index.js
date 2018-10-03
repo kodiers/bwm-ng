@@ -11,10 +11,12 @@ const userRoutes = require('./routes/users');
 mongoose.connect(config.DB_URI, {
   "auth": { "authSource": config.authSource },
   "user": config.user,
-  "pass": config.pass
+  "pass": config.pass,
+  useCreateIndex: true,
+  useNewUrlParser: true
 }).then(() => {
-  const fakeDb = new FakeDB();
-  fakeDb.seedDB();
+  // const fakeDb = new FakeDB();
+  // fakeDb.seedDB();
 });
 
 

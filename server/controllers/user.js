@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const {normalizeErrors} = require('../helpers/mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('../config/dev');
 
 
 exports.auth = function (req, res) {
@@ -14,10 +16,15 @@ exports.auth = function (req, res) {
     if (!user) {
       return res.status(400).send({errors: [{title: 'Invalid user!', detail: 'User not exists'}]});
     }
-    if (user.isSamePassword(password)) {
+    if (user.hasSamePassword(password)) {
       // return JWT
+      const token = jwt.sign({
+        userId: user.id,
+        username: user.username
+      }, config.secret, { expiresIn: '1h' });
+      return res.json(token);
     } else {
-      return res.status(403).send({errors: [{title: 'Wrond data!', detail: 'Invalid email or password'}]});
+      return res.status(401).send({errors: [{title: 'Wrond data!', detail: 'Invalid email or password'}]});
     }
   });
 };
@@ -48,3 +55,31 @@ exports.register = function (req, res) {
     });
   });
 };
+
+exports.authMiddleware = function (req, res, next) {
+  const token = req.headers.authorization;
+  if (token) {
+    const user = parseToken(token);
+    User.findById(user.userId, function (err, user) {
+      if (err) {
+        return res.status(500).send({errors: normalizeErrors(err.errors)});
+      }
+      if (user) {
+        res.locals.user = user;
+        next();
+      } else {
+        return notAuthorized(res);
+      }
+    })
+  } else {
+    return notAuthorized(res);
+  }
+};
+
+function parseToken(token) {
+  return jwt.verify(token.split(' ')[1], config.secret);
+}
+
+function notAuthorized(res) {
+  return res.status(403).send({errors: [{title: 'Not authorized!', detail: 'You need login'}]});
+}

@@ -58,6 +58,11 @@
             [disabled]="!registerForm.valid"
             (click)="register(registerForm)">Submit</button>
         </form>
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+          <p *ngFor="let error of errors">
+            {{ error.detail }}
+          </p>
+        </div>
       </div>
       <div class="col-md-6 ml-auto">
         <div class="image-container">

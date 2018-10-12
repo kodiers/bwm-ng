@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {NgForm} from '@angular/forms';
 import {AuthService} from '../shared/auth.service';
 import {Router} from '@angular/router';
 
@@ -18,7 +17,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  register(registerForm: NgForm) {
+  register() {
     this.auth.register(this.formData).subscribe(
       () => {
         this.router.navigate(['/login', {registered: 'success'}]);

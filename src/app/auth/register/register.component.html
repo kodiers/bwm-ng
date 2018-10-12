@@ -56,7 +56,7 @@
             type="submit"
             class="btn btn-bwm"
             [disabled]="!registerForm.valid"
-            (click)="register(registerForm)">Submit</button>
+            (click)="register()">Submit</button>
         </form>
         <div class="alert alert-danger" *ngIf="errors.length > 0">
           <p *ngFor="let error of errors">

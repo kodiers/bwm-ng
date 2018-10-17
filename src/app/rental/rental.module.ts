@@ -15,6 +15,7 @@ import {UppercasePipe} from '../common/pipes/uppercase.pipe';
 import {MapModule} from '../common/map/map.module';
 import {AuthGuard} from '../auth/shared/auth.guard';
 import { RentalDetailBookingComponent } from './rental-detail/rental-detail-booking/rental-detail-booking.component';
+import {HelperService} from '../common/service/helper.service';
 
 
 const routes: Routes = [
@@ -44,7 +45,8 @@ const routes: Routes = [
   ],
   providers: [
     RentalService,
-    AuthGuard
+    AuthGuard,
+    HelperService
   ]
 })
 export class RentalModule {

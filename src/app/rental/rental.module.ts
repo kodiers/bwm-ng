@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 import {NgPipesModule} from 'ngx-pipes';
 import {Daterangepicker} from 'ng2-daterangepicker';
@@ -41,7 +42,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgPipesModule,
     MapModule,
-    Daterangepicker
+    Daterangepicker,
+    FormsModule
   ],
   providers: [
     RentalService,

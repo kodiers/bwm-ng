@@ -1,8 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+
 import {Booking} from '../../../booking/shared/booking.model';
 import {HelperService} from '../../../common/service/helper.service';
-import * as moment from 'moment';
+import {Rental} from '../../shared/rental.model';
 
 @Component({
   selector: 'app-rental-detail-booking',
@@ -10,8 +13,8 @@ import * as moment from 'moment';
   styleUrls: ['./rental-detail-booking.component.scss']
 })
 export class RentalDetailBookingComponent implements OnInit {
-  @Input() price: number;
-  @Input() bookings: Booking[];
+  @Input() rental: Rental;
+  newBooking: Booking;
 
   daterange: any = {};
   bookedOutDates: any[] = [];
@@ -23,37 +26,46 @@ export class RentalDetailBookingComponent implements OnInit {
     isInvalidDate: this.checkForInvalidDate.bind(this)
   };
 
-  constructor(private helper: HelperService) { }
+  constructor(private helper: HelperService,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.newBooking = new Booking();
     this.getBookedOutDates();
   }
 
   private checkForInvalidDate(date) {
-    return this.bookedOutDates.includes(date.format(Booking.DATE_FORMAT)) || date.diff(moment(), 'days') < 0;
+    return this.bookedOutDates.includes(this.helper.formatBookingDate(date)) || date.diff(moment(), 'days') < 0;
   }
 
   private getBookedOutDates() {
-    if (this.bookings && this.bookings.length > 0) {
-      this.bookings.forEach((booking: Booking) => {
-        const dateRange = this.helper.getRangeOfDates(booking.startAt, booking.endAt);
+    const bookings: Booking[] = this.rental.bookings;
+    if (bookings && bookings.length > 0) {
+      bookings.forEach((booking: Booking) => {
+        const dateRange = this.helper.getBookingRangeOfDates(booking.startAt, booking.endAt);
         this.bookedOutDates.push(...dateRange);
       });
     }
   }
 
   selectedDate(value: any, datepicker?: any) {
-    // this is the date the iser selected
-    console.log(value);
-
-    // any object can be passed to the selected event and it will be passed back here
-    datepicker.start = value.start;
-    datepicker.end = value.end;
+    this.newBooking.startAt = this.helper.formatBookingDate(value.start);
+    this.newBooking.endAt = this.helper.formatBookingDate(value.end);
+    this.newBooking.days = -(value.start.diff(value.end, 'days'));
+    this.newBooking.totalPrice = this.newBooking.days * this.rental.dailyRate;
 
     // or manupulat your own internal property
     this.daterange.start = value.start;
     this.daterange.end = value.end;
     this.daterange.label = value.label;
+  }
+
+  openConfirmModal(content) {
+    this.modalService.open(content);
+  }
+
+  createBooking() {
+    console.log(this.newBooking);
   }
 
 }

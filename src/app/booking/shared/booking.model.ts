@@ -10,5 +10,5 @@ export class Booking {
   days: number;
   guests: number;
   createdAt: string;
-  user: Rental;
+  rental: Rental;
 }

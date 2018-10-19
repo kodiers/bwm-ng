@@ -17,6 +17,7 @@ import {MapModule} from '../common/map/map.module';
 import {AuthGuard} from '../auth/shared/auth.guard';
 import { RentalDetailBookingComponent } from './rental-detail/rental-detail-booking/rental-detail-booking.component';
 import {HelperService} from '../common/service/helper.service';
+import {BookingService} from '../booking/shared/booking.service';
 
 
 const routes: Routes = [
@@ -48,7 +49,8 @@ const routes: Routes = [
   providers: [
     RentalService,
     AuthGuard,
-    HelperService
+    HelperService,
+    BookingService
   ]
 })
 export class RentalModule {

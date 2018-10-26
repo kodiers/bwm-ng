@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class RentalService {
@@ -13,6 +13,11 @@ export class RentalService {
 
   public getRentalById(rentalId: string): Observable<any> {
     return this.http.get('/api/v1/rentals/' + rentalId);
+  }
+
+  public getRentalsByCity(city: string): Observable<any> {
+    const params = new HttpParams().set('city', city);
+    return this.http.get('/api/v1/rentals', {params});
   }
 
 }

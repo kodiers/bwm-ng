@@ -9,6 +9,7 @@ import {Booking} from '../../../booking/shared/booking.model';
 import {HelperService} from '../../../common/service/helper.service';
 import {Rental} from '../../shared/rental.model';
 import {BookingService} from '../../../booking/shared/booking.service';
+import {AuthService} from '../../../auth/shared/auth.service';
 
 @Component({
   selector: 'app-rental-detail-booking',
@@ -38,7 +39,8 @@ export class RentalDetailBookingComponent implements OnInit {
               private modalService: NgbModal,
               private bookingService: BookingService,
               private toastr: ToastsManager,
-              private vcr: ViewContainerRef) {
+              private vcr: ViewContainerRef,
+              public auth: AuthService) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 

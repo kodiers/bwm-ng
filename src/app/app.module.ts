@@ -11,6 +11,7 @@ import { HeaderComponent } from './common/header/header.component';
 
 import {RentalModule} from './rental/rental.module';
 import {AuthModule} from './auth/auth.module';
+import {ManageModule} from './manage/manage.module';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
     NgbModule.forRoot(),
     RentalModule,
     AuthModule,
+    ManageModule,
     ToastModule.forRoot()
   ],
   providers: [],

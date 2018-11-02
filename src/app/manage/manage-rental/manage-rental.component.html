@@ -2,18 +2,27 @@
   <h1 class="page-title">My Rentals</h1>
   <div class="row">
     <ng-container *ngIf="rentals && rentals.length > 0">
-      <div class="col-md-4" *ngFor="let rental of rentals">
+      <div class="col-md-4" *ngFor="let rental of rentals; let i = index">
         <div class="card text-center">
           <div class="card-block">
             <h4 class="card-title">{{rental.title}} - {{rental.city|ucwords}}</h4>
-            <a class="btn btn-bwm btn-ghost" routerLink="/rentals/{{rental._id}}">Go to Rental</a>
+            <a class="btn btn-ghost" routerLink="/rentals/{{rental._id}}">Go to Rental</a>
             <span *ngIf="rental.bookings.length > 0">
-              <app-manage-rental-booking></app-manage-rental-booking>
+              <app-manage-rental-booking [bookings]="rental.bookings"></app-manage-rental-booking>
             </span>
           </div>
           <div class="card-footer text-muted">
             <p>Created at {{rental.createdAt|date:'y/MM/d'}}</p>
-            <button type="button" class="btn btn-bwm btn-delete">Delete</button>
+            <button
+              type="button"
+              class="btn btn-bwm btn-delete"
+              (click)="rentalDeleteIndex = i"
+              *ngIf="rentalDeleteIndex !== i">Delete</button>
+            <div *ngIf="rentalDeleteIndex === i">
+              <p class="confirm-message">Do you confirm delete?</p>
+              <button class="btn btn-success" (click)="deleteRental(rental._id)">Yes</button>
+              <button class="btn btn-danger" (click)="rentalDeleteIndex = undefined">No</button>
+            </div>
           </div>
         </div>
       </div>

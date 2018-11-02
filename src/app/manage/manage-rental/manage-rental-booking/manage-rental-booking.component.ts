@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
+import {Booking} from '../../../booking/shared/booking.model';
 
 @Component({
   selector: 'app-manage-rental-booking',
@@ -6,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage-rental-booking.component.scss']
 })
 export class ManageRentalBookingComponent implements OnInit {
+  @Input() bookings: Booking[];
 
-  constructor() { }
+  constructor(public modalService: NgbModal) { }
 
   ngOnInit() {
   }

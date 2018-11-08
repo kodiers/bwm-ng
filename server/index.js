@@ -25,14 +25,14 @@ mongoose.connect(config.DB_URI, {
 const app = express();
 
 
+app.use(bodyParser.json());
+
 app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const appPath = path.join(__dirname, '..', 'dist');
-
-  app.use(bodyParser.json());
   app.use(express.static(appPath));
   app.get('*', function (req, res) {
     res.sendFile(path.resolve(appPath, 'index.html'));

@@ -36,7 +36,7 @@ router.get('/:id', function (req, res) {
 router.patch('/:id', UserCtrl.authMiddleware, function (req, res) {
   const rentalData = req.body;
   const user = res.locals.user;
-  Rental.findbyId(req.params.id).populate('user').exec(function (err, foundRental) {
+  Rental.findById(req.params.id).populate('user').exec(function (err, foundRental) {
     if (err) {
       return res.status(500).send({errors: normalizeErrors(err.errors)});
     }

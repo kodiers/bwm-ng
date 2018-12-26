@@ -33,6 +33,29 @@ router.get('/:id', function (req, res) {
     });
 });
 
+router.patch('/:id', UserCtrl.authMiddleware, function (req, res) {
+  const rentalData = req.body;
+  const user = res.locals.user;
+  Rental.findbyId(req.params.id).populate('user').exec(function (err, foundRental) {
+    if (err) {
+      return res.status(500).send({errors: normalizeErrors(err.errors)});
+    }
+    if (!foundRental) {
+      return res.status(404).send({errors: [{title: 'Rental error', detail: 'Could not find rental'}]});
+    }
+    if (foundRental.user.id !== user.id) {
+      return res.status(403).send({errors: [{title: 'Invalid user', detail: 'Your are not rental owner'}]});
+    }
+    foundRental.set(rentalData);
+    foundRental.save(function (err) {
+      if (err) {
+        return res.status(500).send({errors: normalizeErrors(err.errors)});
+      }
+      return res.status(200).send(foundRental);
+    });
+  });
+});
+
 router.delete('/:id', UserCtrl.authMiddleware, function (req, res) {
   const user = res.locals.user;
   Rental.findById(req.params.id)

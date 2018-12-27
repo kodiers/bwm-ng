@@ -33,4 +33,8 @@ export class RentalService {
     return this.http.delete(`/api/v1/rentals/${rentalId}`);
   }
 
+  public updateRental(rentalId: string, rentalData: any): Observable<any> {
+    return this.http.patch(`/api/v1/rentals/${rentalId}`, rentalData);
+  }
+
 }

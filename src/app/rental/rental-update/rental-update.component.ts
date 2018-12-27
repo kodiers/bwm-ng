@@ -28,4 +28,12 @@ export class RentalUpdateComponent implements OnInit {
     });
   }
 
+  updateRental(rentalId: string, rentalData: any) {
+    this.rentalService.updateRental(rentalId, rentalData).subscribe(
+      (updatedRental: Rental) => {
+        this.rental = updatedRental;
+      },
+      (error) => {});
+  }
+
 }

@@ -1,12 +1,11 @@
 <div class="editable-component" [ngStyle]="style">
-  <input
+  <select
     class="{{className}}"
-    type="{{type}}"
-    (keydown.escape)="cancelUpdate()"
-    (keyup.enter)="updateEntity()"
     *ngIf="isActiveInput"
-    [(ngModel)]="entity[entityField]"
-    [value]="entity[entityField]" >
+    [(ngModel)]="entity[entityField]">
+    <option [selected]="entity[entityField] === undefined" disabled>---</option>
+    <option [ngValue]="option" *ngFor="let option of options">{{option}}</option>
+  </select>
   <span
     *ngIf="!isActiveInput"
     class="{{className}} inline">
@@ -33,3 +32,5 @@
     </button>
   </div>
 </div>
+
+

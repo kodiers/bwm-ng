@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Subject} from 'rxjs/Subject';
 
 import {Rental} from '../shared/rental.model';
 import {RentalService} from '../shared/rental.service';
@@ -12,6 +13,8 @@ import {RentalService} from '../shared/rental.service';
 export class RentalUpdateComponent implements OnInit {
 
   rental: Rental;
+  rentalCategories = Rental.CATEGORIES;
+  locationSubject: Subject<any> = new Subject();
 
   constructor(private route: ActivatedRoute,
               private rentalService: RentalService) { }
@@ -32,6 +35,9 @@ export class RentalUpdateComponent implements OnInit {
     this.rentalService.updateRental(rentalId, rentalData).subscribe(
       (updatedRental: Rental) => {
         this.rental = updatedRental;
+        if (rentalData.city || rentalData.street) {
+          this.locationSubject.next(this.rental.city + ', ' + this.rental.street);
+        }
       },
       (error) => {});
   }

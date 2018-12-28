@@ -1,12 +1,14 @@
 <div class="editable-component" [ngStyle]="style">
-  <input
+  <textarea
+    rows="{{rows}}"
+    cols="{{cols}}"
     class="{{className}}"
-    type="{{type}}"
     (keydown.escape)="cancelUpdate()"
     (keyup.enter)="updateEntity()"
     *ngIf="isActiveInput"
     [(ngModel)]="entity[entityField]"
     [value]="entity[entityField]" >
+  </textarea>
   <span
     *ngIf="!isActiveInput"
     class="{{className}} inline">
@@ -33,3 +35,4 @@
     </button>
   </div>
 </div>
+

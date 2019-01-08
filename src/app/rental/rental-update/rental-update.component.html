@@ -47,6 +47,7 @@
           <app-editable-input
             [(entity)]="rental"
             [field]="'city'"
+            [transformView]="transformLocation"
             [className]="'rental-city'"
             (entityUpdated)="updateRental(rental._id, $event)">
           </app-editable-input>
@@ -54,6 +55,7 @@
           <app-editable-input
             [(entity)]="rental"
             [field]="'street'"
+            [transformView]="transformLocation"
             [className]="'rental-street'"
             (entityUpdated)="updateRental(rental._id, $event)">
           </app-editable-input>
@@ -69,8 +71,8 @@
                 (entityUpdated)="updateRental(rental._id, $event)">
               </app-editable-input> bedrooms
             </span>
-            <span><i class="fa fa-user"></i> {{rental.bedrooms + 4}} guests</span>
-            <span><i class="fa fa-bed"></i> {{rental.bedrooms + 2}} beds</span>
+            <span><i class="fa fa-user"></i> {{ countBedroomAssets(4) }} guests</span>
+            <span><i class="fa fa-bed"></i> {{ countBedroomAssets(2) }} beds</span>
           </div>
           <app-editable-textarea
             [(entity)]="rental"

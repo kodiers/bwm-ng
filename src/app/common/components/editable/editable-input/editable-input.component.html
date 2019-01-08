@@ -10,7 +10,7 @@
   <span
     *ngIf="!isActiveInput"
     class="{{className}} inline">
-    {{entity[entityField]}}
+    {{ transformView(entity[entityField]) }}
   </span>
   <div class="inline">
     <button

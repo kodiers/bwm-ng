@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 
-import {NgPipesModule} from 'ngx-pipes';
+import {NgPipesModule, UcWordsPipe} from 'ngx-pipes';
 import {Daterangepicker} from 'ng2-daterangepicker';
 
 import {MapModule} from '../common/map/map.module';
@@ -23,13 +23,14 @@ import {BookingService} from '../booking/shared/booking.service';
 import { RentalSearchComponent } from './rental-search/rental-search.component';
 import { RentalCreateComponent } from './rental-create/rental-create.component';
 import { RentalUpdateComponent } from './rental-update/rental-update.component';
+import {RentalGuard} from './shared/rental.guard';
 
 
 const routes: Routes = [
   { path: 'rentals', component: RentalComponent, children: [
       { path: '', component: RentalListComponent},
       { path: 'new', component: RentalCreateComponent, canActivate: [AuthGuard]},
-      { path: ':rentalId/edit', component: RentalUpdateComponent, canActivate: [AuthGuard]},
+      { path: ':rentalId/edit', component: RentalUpdateComponent, canActivate: [AuthGuard, RentalGuard]},
       { path: ':rentalId', component: RentalDetailComponent},
       { path: ':city/homes', component: RentalSearchComponent}
     ]
@@ -62,7 +63,9 @@ const routes: Routes = [
     RentalService,
     AuthGuard,
     HelperService,
-    BookingService
+    BookingService,
+    UcWordsPipe,
+    RentalGuard
   ]
 })
 export class RentalModule {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {EditableComponent} from '../editable-component';
 
 @Component({
@@ -6,6 +6,6 @@ import {EditableComponent} from '../editable-component';
   templateUrl: './editable-select.component.html',
   styleUrls: ['./editable-select.component.scss']
 })
-export class EditableSelectComponent extends EditableComponent implements OnInit {
+export class EditableSelectComponent extends EditableComponent {
   @Input() options: any[];
 }

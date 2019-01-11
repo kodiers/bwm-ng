@@ -1,0 +1,40 @@
+<label class="image-upload-container btn btn-bwm" *ngIf="!imageChangedEvent">
+  <span>Select image</span>
+  <input type="file" accept="image/*" (change)="processFile($event)">
+</label>
+
+<button
+  type="button"
+  class="btn btn-success"
+  *ngIf="imageChangedEvent"
+  (click)="uploadImage()">Upload image
+</button>
+
+<button
+  type="button"
+  class="btn btn-danger"
+  *ngIf="imageChangedEvent"
+  (click)="cancelCropping()">Cancel
+</button>
+
+<image-cropper
+  [imageChangedEvent]="imageChangedEvent"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="4 / 3"
+  [resizeToWidth]="950"
+  format="jpeg"
+  (imageCroppedFile)="imageCropped($event)"
+  (imageLoaded)="imageLoaded()"
+  *ngIf="imageChangedEvent"
+></image-cropper>
+
+<div class="img-preview-container" *ngIf="selectedFile && selectedFile.src">
+  <div class="img-preview" [ngStyle]="{'background-image': 'url(' + selectedFile.src + ')'}">
+
+  </div>
+  <div class="img-loading-overlay" *ngIf="selectedFile && selectedFile.pending">
+    <div class="img-spinning-circle"></div>
+  </div>
+  <div class="alert alert-success" *ngIf="selectedFile && selectedFile.status === 'OK'">Image uploaded successfully!</div>
+  <div class="alert alert-danger" *ngIf="selectedFile && selectedFile.status === 'FAIL'">Image upload fail!</div>
+</div>

@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Output, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 
-import {ToastsManager} from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 import {ImageUploadService} from './image-upload.service';
 
@@ -29,9 +29,7 @@ export class ImageUploadComponent {
   imageChangedEvent: any;
 
   constructor(private imageService: ImageUploadService,
-              private toastr: ToastsManager,
-              private vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+              private toastr: ToastrService) {
   }
 
   private onSuccess(imageUrl: string) {

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
 
 import {environment} from '../../../environments/environment';
 
@@ -16,10 +16,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
   @ViewChild('cardExp') cardExpRef: ElementRef;
   @ViewChild('cardCvc') cardCvcRef: ElementRef;
 
+  @Output() paymentConfirmed = new EventEmitter();
+
   cardNumber: any;
   cardExp: any;
   cardCvc: any;
   error = '';
+  isValidatingCard = false;
+  token: any;
 
   constructor() {
     this.stripe = Stripe(environment.STRIPE_PK);
@@ -62,7 +66,21 @@ export class PaymentComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {}
+  async onSubmit() {
+    this.isValidatingCard = true;
+    const {token, error} =  await this.stripe.createToken(this.cardNumber);
+    this.isValidatingCard = false;
+    if (error) {
+      console.error(error);
+    } else {
+      this.token = token;
+      this.paymentConfirmed.next(token);
+    }
+  }
+
+  isCardValid(): boolean {
+    return this.cardNumber._complete && this.cardExp._complete && this.cardCvc._complete;
+  }
 
 }
 

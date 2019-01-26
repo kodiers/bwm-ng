@@ -1,5 +1,9 @@
 form {
   margin: 20px 0;
+
+  &.loading {
+    opacity: 0.5;
+  }
 }
 
 .group {
@@ -71,6 +75,10 @@ button:focus {
 
 button:active {
   background: #43458B;
+}
+
+button:disabled {
+  opacity: 0.5;
 }
 
 .outcome {

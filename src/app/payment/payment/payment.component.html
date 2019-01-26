@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form [ngClass]="isValidatingCard ? 'loading': ''">
   <div class="group">
     <label>
       <span>Card number</span>
@@ -17,6 +17,9 @@
     <div class="error" *ngIf="error">
       {{error}}
     </div>
+    <div class="success alert alert-success" *ngIf="token">
+      Card accepted successfully!
+    </div>
   </div>
-  <button type="submit">Submit, You will be not chrged yet!</button>
+  <button type="button" (click)="onSubmit()" [disabled]="!isCardValid()">Submit, You will be not charged yet!</button>
 </form>

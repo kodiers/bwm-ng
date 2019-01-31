@@ -12,6 +12,7 @@ import { HeaderComponent } from './common/header/header.component';
 import {RentalModule} from './rental/rental.module';
 import {AuthModule} from './auth/auth.module';
 import {ManageModule} from './manage/manage.module';
+import {UserModule} from './user/user.module';
 
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
     RentalModule,
     AuthModule,
     ManageModule,
+    UserModule,
     ToastrModule.forRoot()
   ],
   providers: [],

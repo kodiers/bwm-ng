@@ -11,6 +11,7 @@ const jwt = new JwtHelperService();
 class DecodedToken {
   exp: number;
   username: string;
+  userId: string;
 }
 
 @Injectable()
@@ -60,6 +61,10 @@ export class AuthService {
 
   public getAuthToken(): string {
     return localStorage.getItem('bwm_auth');
+  }
+
+  public getUserId(): string {
+    return this.decodedToken.userId;
   }
 
 }

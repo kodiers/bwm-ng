@@ -7,6 +7,17 @@ const Review = require('../models/review');
 
 const {normalizeErrors} = require('../helpers/mongoose');
 
+
+exports.getReviews = function (req, res) {
+  const {rentalId} = req.query;
+  Review.find({'rental': rentalId}).populate('user').exec((err, reviews) => {
+    if (err) {
+      return res.status(500).send({errors: normalizeErrors(err.errors)});
+    }
+    return res.json(reviews);
+  })
+};
+
 exports.createReview = function (req, res) {
   const reviewData = req.body;
   const {bookingId} = req.query;

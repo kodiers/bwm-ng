@@ -6,6 +6,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {StarRatingModule} from 'angular-star-rating';
 
 import {ReviewComponent} from './review.component';
+import {ReviewService} from './shared/review.service';
 
 
 
@@ -20,6 +21,7 @@ import {ReviewComponent} from './review.component';
     StarRatingModule.forRoot()
   ],
   providers: [
+    ReviewService
   ],
   exports: [
     ReviewComponent

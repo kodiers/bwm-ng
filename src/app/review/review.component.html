@@ -15,7 +15,7 @@
         id="text"
         [(ngModel)]="review.text"
         name="text"></textarea>
-      <star-rating [starType]="'svg'" [rating]="2.63"></star-rating>
+      <star-rating [starType]="'svg'" [rating]="3" (ratingChange)="handleRatingChange($event)"></star-rating>
     </form>
   </div>
   <div class="modal-footer">

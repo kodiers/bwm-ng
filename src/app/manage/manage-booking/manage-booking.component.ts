@@ -45,7 +45,6 @@ export class ManageBookingComponent implements OnInit {
   }
 
   declinePayment(payment) {
-    console.log(payment);
     this.paymentService.declinePayment(payment).subscribe(
       (json) => {
         payment.status = 'declined';

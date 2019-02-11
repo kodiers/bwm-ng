@@ -1,4 +1,5 @@
 import {Rental} from '../../rental/shared/rental.model';
+import {Review} from '../../review/shared/review.model';
 
 export class Booking {
   static readonly DATE_FORMAT = 'YYYY/MM/DD';
@@ -12,4 +13,5 @@ export class Booking {
   createdAt: string;
   rental: Rental;
   paymentToken: any;
+  review: Review;
 }

@@ -20,4 +20,8 @@ export class ReviewService {
   public getRentalReviews(rentalId: string): Observable<any> {
     return this.http.get(`/api/v1/reviews?rentalId=${rentalId}`);
   }
+
+  public getOverallRating(rentalId: string): Observable<any> {
+    return this.http.get(`/api/v1/reviews/${rentalId}/rating`);
+  }
 }

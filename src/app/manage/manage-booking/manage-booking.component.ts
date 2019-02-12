@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+
+import * as moment from 'moment';
+
 import {BookingService} from '../../booking/shared/booking.service';
 import {Booking} from '../../booking/shared/booking.model';
 import {PaymentService} from '../../payment/shared/payment.service';
+import {Review} from '../../review/shared/review.model';
 
 @Component({
   selector: 'app-manage-booking',
@@ -41,12 +45,21 @@ export class ManageBookingComponent implements OnInit {
   }
 
   declinePayment(payment) {
-    console.log(payment);
     this.paymentService.declinePayment(payment).subscribe(
       (json) => {
         payment.status = 'declined';
       },
       (err) => {});
+  }
+
+  isExpired(endAtText: string) {
+    const timeNow = moment();
+    const endAt = moment(endAtText);
+    return endAt.isBefore(timeNow);
+  }
+
+  reviewPublished(bookingIndex: number, review: Review) {
+    this.bookings[bookingIndex]['review'] = review;
   }
 
 }

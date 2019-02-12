@@ -63,3 +63,18 @@ exports.createReview = function (req, res) {
       }
   });
 };
+
+exports.getRentalRating = function (req, res) {
+  const rentalId = req.params.id;
+  Review.aggregate([
+    {"$unwind": "$rental"},
+    {"$group": {
+        "_id": rentalId,
+        "ratingAvg": {"$avg": "$rating"}
+      }}], function (err, result) {
+    if (err) {
+      return res.status(500).send({errors: normalizeErrors(err.errors)});
+    }
+    return res.json(result[0]['ratingAvg']);
+  });
+};

@@ -26,6 +26,7 @@ import { RentalSearchComponent } from './rental-search/rental-search.component';
 import { RentalCreateComponent } from './rental-create/rental-create.component';
 import { RentalUpdateComponent } from './rental-update/rental-update.component';
 import {RentalGuard} from './shared/rental.guard';
+import {StarRatingModule} from 'angular-star-rating';
 
 
 const routes: Routes = [
@@ -61,7 +62,8 @@ const routes: Routes = [
     FormsModule,
     EditableModule,
     ImageUploadModule,
-    PaymentModule
+    PaymentModule,
+    StarRatingModule.forChild()
   ],
   providers: [
     RentalService,

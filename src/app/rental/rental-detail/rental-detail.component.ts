@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
+import * as moment from 'moment';
+
 import {RentalService} from '../shared/rental.service';
 import {Rental} from '../shared/rental.model';
+import {Review} from '../../review/shared/review.model';
+import {ReviewService} from '../../review/shared/review.service';
 
 @Component({
   selector: 'app-rental-detail',
@@ -11,9 +15,12 @@ import {Rental} from '../shared/rental.model';
 })
 export class RentalDetailComponent implements OnInit {
   rental: Rental;
+  reviews: Review[] = [];
+  rating: number;
 
   constructor(private route: ActivatedRoute,
-              private rentalService: RentalService) { }
+              private rentalService: RentalService,
+              private reviewService: ReviewService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -24,6 +31,24 @@ export class RentalDetailComponent implements OnInit {
   getRental(rentalId: string) {
     this.rentalService.getRentalById(rentalId).subscribe((rental: Rental) => {
       this.rental = rental;
+      this.getReviews(rental._id);
+      this.getOverallRating(rental._id);
+    });
+  }
+
+  getReviews(rentalId: string) {
+    this.reviewService.getRentalReviews(rentalId).subscribe((reviews: Review[]) => {
+      this.reviews = reviews;
+    });
+  }
+
+  formatDate(date: string): string {
+    return `${moment(date).fromNow()}`;
+  }
+
+  getOverallRating(rentalId: string) {
+    this.reviewService.getOverallRating(rentalId).subscribe(rating => {
+      this.rating = Math.round(rating * 10) / 10;
     });
   }
 
